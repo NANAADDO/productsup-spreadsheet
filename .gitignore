@@ -17,7 +17,7 @@ appservice/*.log
 appservice/*.cache
 appservice/*.lock
 
-# Ignore IDE files
+#####Ignore IDE files
 .idea/
 .vscode/
 *.sublime-project
