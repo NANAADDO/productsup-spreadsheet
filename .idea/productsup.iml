@@ -39,6 +39,15 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/var-dumper" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/var-exporter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/phpseclib/phpseclib" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/phpstan/phpstan" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/phpstan/phpstan-symfony" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/myclabs/deep-copy" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/nikic/php-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/clue/ndjson-react" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/fidry/cpu-core-counter" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/friendsofphp/php-cs-fixer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

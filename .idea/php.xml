@@ -49,6 +49,15 @@
       <path value="$PROJECT_DIR$/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/appservice/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/appservice/vendor/friendsofphp/php-cs-fixer" />
+      <path value="$PROJECT_DIR$/appservice/vendor/fidry/cpu-core-counter" />
+      <path value="$PROJECT_DIR$/appservice/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/appservice/vendor/clue/ndjson-react" />
+      <path value="$PROJECT_DIR$/appservice/vendor/phpstan/phpstan-symfony" />
+      <path value="$PROJECT_DIR$/appservice/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/appservice/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/appservice/vendor/phpstan/phpstan" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

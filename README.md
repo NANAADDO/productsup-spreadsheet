@@ -55,7 +55,7 @@ task or concern, which not only improves maintainability but also makes it strai
 By isolating responsibilities, we ensure clear boundaries between components, enabling modular development and easier debugging
 
 
-<img src="https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/service-process-flow.png" alt="Description" style="align-content: center;" width="500" height="500"/>
+<img src="https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/service-process-flow.png" alt="Description" style="align-content: center;" width="800" height="350"/>
 
 ## Application Setup
 
