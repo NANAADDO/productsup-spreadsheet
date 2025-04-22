@@ -49,8 +49,12 @@ Contents
 * Leverage Service Resolvers (e.g., tagged service locators or Symfony’s ServiceSubscriberInterface) to dynamically resolve service implementations when multiple services share the same interface.
 
 
-## DATABASE SCHEMA
-![Diagram](https://github.com/NANAADDO/neuronation/blob/master/db%20schema.png)
+## Service Process Flow
+Each service in the architecture is designed following the <b>Single Responsibility Principle</b>. This means every service focuses on a specific
+task or concern, which not only improves maintainability but also makes it straightforward to test each service independently.
+By isolating responsibilities, we ensure clear boundaries between components, enabling modular development and easier debugging
+
+![Diagram](https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/service-process-flow.png)
 
 ## Application Setup
 

@@ -4,7 +4,7 @@ appservice/.env
 .env.local
 .env.*.local
 appservice/.phpunit.result.cache
-appservice//build/
+appservice/build/
 appservice/var/
 /appservice/node_modules/
 public/bundles/
