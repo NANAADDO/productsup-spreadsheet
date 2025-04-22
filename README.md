@@ -54,7 +54,8 @@ Each service in the architecture is designed following the <b>Single Responsibil
 task or concern, which not only improves maintainability but also makes it straightforward to test each service independently.
 By isolating responsibilities, we ensure clear boundaries between components, enabling modular development and easier debugging
 
-![Diagram](https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/service-process-flow.png)
+
+<img src="https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/service-process-flow.png" alt="Description" width="500"/>
 
 ## Application Setup
 
