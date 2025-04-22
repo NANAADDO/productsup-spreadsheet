@@ -6,11 +6,11 @@ use App\Application\Config\Contract\FileSourceConfigContract;
 use App\Application\File\Contract\FileSaverContract;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
-
 #[AsAlias(FileSaverContract::class)]
 class XmlFileSaver implements FileSaverContract
 {
-    public function __construct(private FileSourceConfigContract $fileSourceConfig){
+    public function __construct(private FileSourceConfigContract $fileSourceConfig)
+    {
     }
 
     public function save(string $content): void
@@ -22,7 +22,6 @@ class XmlFileSaver implements FileSaverContract
         }
 
         file_put_contents($fullPath, $content);
-
 
     }
 

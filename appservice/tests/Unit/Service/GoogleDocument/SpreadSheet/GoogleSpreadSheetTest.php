@@ -5,12 +5,12 @@ namespace App\Tests\Unit\Service\GoogleDocument\SpreadSheet;
 use App\Application\Cache\Contract\CacheContract;
 use App\Application\Config\Contract\FileSourceConfigContract;
 use App\Application\Config\Contract\GoogleSheetConfigContract;
-use App\Application\GoogleDocument\Sheet\Contract\SheetCreatrContract;
+use App\Application\GoogleDocument\Sheet\Contract\SheetCreatorContract;
 use App\Application\GoogleDocument\Sheet\Contract\SheetWriterContract;
 use App\Infrastructure\GoogleDocument\Sheet\GoogleSpreadSheet;
 use App\Shared\Util\SheetNameHelper;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class GoogleSpreadSheetTest extends TestCase
 {
@@ -25,12 +25,11 @@ class GoogleSpreadSheetTest extends TestCase
     {
         parent::setUp();
 
-
         $this->redisCacheMock = $this->createMock(CacheContract::class);
         $this->googleSheetEnvConfigMock = $this->createMock(GoogleSheetConfigContract::class);
         $this->fileSourceEnvConfigMock = $this->createMock(FileSourceConfigContract::class);
         $this->sheetWriterMock = $this->createMock(SheetWriterContract::class);
-        $this->sheetCreatorMock = $this->createMock(SheetCreatrContract::class);
+        $this->sheetCreatorMock = $this->createMock(SheetCreatorContract::class);
 
         $this->googleSpreadSheet = new GoogleSpreadSheet(
             $this->redisCacheMock,
@@ -46,20 +45,16 @@ class GoogleSpreadSheetTest extends TestCase
         $sheetId = 'existing-sheet-id';
         $data = [['name' => 'Product A', 'price' => 100]];
 
-
         $this->googleSheetEnvConfigMock
             ->method('getSheetID')
             ->willReturn($sheetId);
-
 
         $this->sheetWriterMock
             ->expects($this->once())
             ->method('write')
             ->with($sheetId, 'Sheet1!A1', $data);
 
-
         $result = $this->googleSpreadSheet->process($data);
-
 
         $this->assertEquals($sheetId, $result);
     }
@@ -85,7 +80,6 @@ class GoogleSpreadSheetTest extends TestCase
             $this->fileSourceEnvConfigMock->getClientName(),
             $this->fileSourceEnvConfigMock->getFileName()
         );
-
 
         $this->redisCacheMock
             ->method('verifyCacheHasData')

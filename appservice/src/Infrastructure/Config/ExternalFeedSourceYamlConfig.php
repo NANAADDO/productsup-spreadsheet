@@ -3,14 +3,13 @@
 namespace App\Infrastructure\Config;
 
 use App\Application\Config\Contract\ExternalFeedSourceConfigContract;
-
 use App\Application\Config\Contract\FileSourceConfigContract;
 use App\Infrastructure\Config\constant\ConfigKeys;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Symfony\Component\Yaml\Yaml;
 
 #[AsAlias(ExternalFeedSourceConfigContract::class)]
-class ExternalFeedSourceYamlConfig implements  ExternalFeedSourceConfigContract
+class ExternalFeedSourceYamlConfig implements ExternalFeedSourceConfigContract
 {
     private array $config;
     private mixed  $environment;
@@ -19,7 +18,7 @@ class ExternalFeedSourceYamlConfig implements  ExternalFeedSourceConfigContract
     {
         $this->config = Yaml::parseFile($this->fileSourceEnvConfig->getFileRemoteSecretPath());
         // refactor this line to  dynamically pick Env status
-        $this->environment = ConfigKeys::DEV == "dev";
+        $this->environment = ConfigKeys::DEV == 'dev';
     }
 
     public function getHost(): string
@@ -42,6 +41,5 @@ class ExternalFeedSourceYamlConfig implements  ExternalFeedSourceConfigContract
             $this->config[ConfigKeys::FTP_PROD][ConfigKeys::USER];
 
     }
-
 
 }

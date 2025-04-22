@@ -11,7 +11,6 @@ use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 #[AsAlias(HttpClientContract::class)]
 class CurlClient implements HttpClientContract
 {
-
     public function get(string $url, string $username, string $password): string
     {
         $ch = curl_init();
@@ -38,6 +37,7 @@ class CurlClient implements HttpClientContract
         }
 
         curl_close($ch);
+
         return $data;
     }
 

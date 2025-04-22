@@ -121,6 +121,20 @@
       <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/symfony/monolog-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/symfony/phpunit-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/theseer/tokenizer" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/clue/ndjson-react" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/evenement/evenement" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/fidry/cpu-core-counter" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/friendsofphp/php-cs-fixer" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/react/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/react/child-process" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/react/dns" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/react/event-loop" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/react/promise" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/react/socket" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/react/stream" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/symfony/options-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/appservice/vendor/symfony/stopwatch" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

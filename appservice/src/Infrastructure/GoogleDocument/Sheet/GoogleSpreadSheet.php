@@ -6,7 +6,7 @@ use App\Application\Cache\Contract\CacheContract;
 use App\Application\Config\Contract\FileSourceConfigContract;
 use App\Application\Config\Contract\GoogleSheetConfigContract;
 use App\Application\GoogleDocument\Sheet\Contract\GoogleSpreadsheetContract;
-use App\Application\GoogleDocument\Sheet\Contract\SheetCreatrContract;
+use App\Application\GoogleDocument\Sheet\Contract\SheetCreatorContract;
 use App\Application\GoogleDocument\Sheet\Contract\SheetWriterContract;
 use App\Shared\Util\SheetNameHelper;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
@@ -21,8 +21,9 @@ class GoogleSpreadSheet implements GoogleSpreadsheetContract
         private GoogleSheetConfigContract $googleSheetEnvConfig,
         private FileSourceConfigContract $fileSourceEnvConfig,
         private SheetWriterContract $sheetWriter,
-        private SheetCreatrContract $sheetCreator
-    ) {}
+        private SheetCreatorContract $sheetCreator
+    ) {
+    }
 
     public function process($data): string
     {
@@ -45,6 +46,5 @@ class GoogleSpreadSheet implements GoogleSpreadsheetContract
 
         return $sheetID;
     }
-
 
 }

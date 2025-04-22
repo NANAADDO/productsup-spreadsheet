@@ -1,0 +1,45 @@
+# Symfony / PHP / Composer
+appservice/vendor/
+appservice/.env
+.env.local
+.env.*.local
+appservice/.phpunit.result.cache
+appservice//build/
+appservice/var/
+/appservice/node_modules/
+public/bundles/
+var/
+/config/secrets/dev/dev.decrypt.private.php
+config/secrets/prod/prod.decrypt.private.php
+
+# Cache, logs, etc.
+appservice/*.log
+appservice/*.cache
+appservice/*.lock
+
+# Ignore IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# PHPUnit
+appservice/phpunit.xml
+appservice/phpunit.xml.dist
+appservice/coverage/
+
+# Twig cache
+/var/cache/twig/
+
+# Symfony Encore / Webpack
+appservice/public/build/
+appservice/assets/node_modules/
+appservice/yarn.lock
+appservice/package-lock.json
+appservice/.parcel-cache/
+appservice/.pnp.*
+appservice/.pnpm-debug.log

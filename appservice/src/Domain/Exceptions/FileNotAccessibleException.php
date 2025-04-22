@@ -6,7 +6,7 @@ use DomainException;
 
 class FileNotAccessibleException extends DomainException
 {
-    public function __construct(string $url = "")
+    public function __construct(string $url = '')
     {
         parent::__construct("Cannot access  file: '{$url}'");
     }

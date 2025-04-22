@@ -21,7 +21,8 @@ class CoffeeFeed
         public bool    $flavored,
         public bool    $seasonal,
         public bool    $inStock,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

@@ -12,7 +12,7 @@ return [
     'App\\Application\\File\\Contract\\LocalFileFetcherContract' => true,
     'App\\Application\\File\\Factory\\FileFetcherFactory' => true,
     'App\\Application\\GoogleDocument\\Sheet\\Contract\\GoogleSpreadsheetContract' => true,
-    'App\\Application\\GoogleDocument\\Sheet\\Contract\\SheetCreatrContract' => true,
+    'App\\Application\\GoogleDocument\\Sheet\\Contract\\SheetCreatorContract' => true,
     'App\\Application\\GoogleDocument\\Sheet\\Contract\\SheetProcessContract' => true,
     'App\\Application\\GoogleDocument\\Sheet\\Contract\\SheetWriterContract' => true,
     'App\\Application\\Logger\\Contract\\LoggerContract' => true,

@@ -3,11 +3,10 @@
 namespace App\Infrastructure\Config;
 
 use App\Application\Config\Contract\FileSourceConfigContract;
-
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
 #[AsAlias(FileSourceConfigContract::class)]
-class FileSourceEnvConfig implements  FileSourceConfigContract
+class FileSourceEnvConfig implements FileSourceConfigContract
 {
     public function getFileSource(): string
     {

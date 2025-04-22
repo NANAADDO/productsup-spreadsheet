@@ -111,7 +111,7 @@
       <argument type="service" id="App\Infrastructure\Config\FileSourceEnvConfig"/>
       <argument type="service" id="App\Infrastructure\Parser\SimpleXmlParser"/>
       <argument type="service" id="App\Application\Product\Factory\ProductSupCoffeeFeedFactory"/>
-      <argument type="service" id="App\Infrastructure\GoogleDocument\Sheet\GoogleSpreadSheet"/>
+      <argument type="service" id="App\Application\GoogleDocument\Sheet\Service\GoogleSpreadSheetService"/>
       <argument type="service" id="App\Infrastructure\Logger\MonoLogger"/>
       <argument type="service" id="App\Infrastructure\File\Save\XmlFileSaver"/>
       <call method="setName">
@@ -123,19 +123,14 @@
     </service>
     <service id="App\Application\File\Factory\FileFetcherFactory" class="App\Application\File\Factory\FileFetcherFactory" autowire="true" autoconfigure="true">
       <argument type="service" id="App\Infrastructure\Config\ExternalFeedSourceYamlConfig"/>
+      <argument type="service" id="App\Infrastructure\HttpClient\CurlClient"/>
     </service>
-    <service id="App\Application\Parser\Contract\XmlParserContract" class="App\Application\Parser\Contract\XmlParserContract" autowire="true" autoconfigure="true">
-      <tag name="container.error" message="The autoloader expected class &quot;App\Application\Parser\Contract\XmlParserContract&quot; to be defined in file &quot;/var/www/vendor/composer/../../src/Application/Parser/Contract/XmlParserContract.php&quot;. The file was found but the class was not in it, the class name or namespace probably has a typo."/>
+    <service id="App\Application\GoogleDocument\Sheet\Service\GoogleSpreadSheetService" class="App\Application\GoogleDocument\Sheet\Service\GoogleSpreadSheetService" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Infrastructure\GoogleDocument\Sheet\GoogleSpreadSheet"/>
     </service>
     <service id="App\Application\Product\Factory\ProductSupCoffeeFeedFactory" class="App\Application\Product\Factory\ProductSupCoffeeFeedFactory" autowire="true" autoconfigure="true"/>
-    <service id="App\Application\Services\StatusService" class="App\Application\Services\StatusService" autowire="true" autoconfigure="true">
-      <tag name="container.error" message="Cannot autowire service &quot;App\Application\Services\StatusService&quot;: argument &quot;$repository&quot; of method &quot;__construct()&quot; has type &quot;App\Domain\Repositories\RepositoryInterface&quot; but this class was not found."/>
-    </service>
     <service id="App\Domain\Entities\Product\Productsup\CoffeeFeed" class="App\Domain\Entities\Product\Productsup\CoffeeFeed" autowire="true" autoconfigure="true">
       <tag name="container.error" message="Cannot autowire service &quot;App\Domain\Entities\Product\Productsup\CoffeeFeed&quot;: argument &quot;$entityId&quot; of method &quot;__construct()&quot; is type-hinted &quot;string&quot;, you should configure its value explicitly."/>
-    </service>
-    <service id="App\Domain\Exceptions\BadRequestException" class="App\Domain\Exceptions\BadRequestException" autowire="true" autoconfigure="true">
-      <tag name="container.error" message="Cannot autowire service &quot;App\Domain\Exceptions\BadRequestException&quot;: argument &quot;$message&quot; of method &quot;__construct()&quot; is type-hinted &quot;string&quot;, you should configure its value explicitly."/>
     </service>
     <service id="App\Domain\Exceptions\FileNotAccessibleException" class="App\Domain\Exceptions\FileNotAccessibleException" autowire="true" autoconfigure="true"/>
     <service id="App\Domain\Exceptions\FileTooLargeException" class="App\Domain\Exceptions\FileTooLargeException" autowire="true" autoconfigure="true">
@@ -145,6 +140,7 @@
     <service id="App\Domain\Exceptions\InvalidUrlException" class="App\Domain\Exceptions\InvalidUrlException" autowire="true" autoconfigure="true">
       <tag name="container.error" message="Cannot autowire service &quot;App\Domain\Exceptions\InvalidUrlException&quot;: argument &quot;$url&quot; of method &quot;__construct()&quot; is type-hinted &quot;string&quot;, you should configure its value explicitly."/>
     </service>
+    <service id="App\Domain\Exceptions\MalformedXmlException" class="App\Domain\Exceptions\MalformedXmlException" autowire="true" autoconfigure="true"/>
     <service id="App\Domain\Exceptions\NotFoundException" class="App\Domain\Exceptions\NotFoundException" autowire="true" autoconfigure="true"/>
     <service id="App\Domain\Exceptions\ServiceUnavailableException" class="App\Domain\Exceptions\ServiceUnavailableException" autowire="true" autoconfigure="true">
       <tag name="container.error" message="Cannot autowire service &quot;App\Domain\Exceptions\ServiceUnavailableException&quot;: argument &quot;$message&quot; of method &quot;__construct()&quot; is type-hinted &quot;string&quot;, you should configure its value explicitly."/>
@@ -164,19 +160,10 @@
     <service id="App\Infrastructure\Config\FileSourceEnvConfig" class="App\Infrastructure\Config\FileSourceEnvConfig" autowire="true" autoconfigure="true"/>
     <service id="App\Infrastructure\Config\GoogleSheetEnvConfig" class="App\Infrastructure\Config\GoogleSheetEnvConfig" autowire="true" autoconfigure="true"/>
     <service id="App\Infrastructure\Config\constant\ConfigKeys" class="App\Infrastructure\Config\constant\ConfigKeys" autowire="true" autoconfigure="true"/>
-    <service id="App\Infrastructure\Console\Command\SpreadsheetCommand" class="App\Infrastructure\Console\Command\SpreadsheetCommand" autowire="true" autoconfigure="true">
-      <tag name="console.command"/>
-      <tag name="container.no_preload"/>
-      <call method="setName">
-        <argument>app:user:greet</argument>
-      </call>
-    </service>
-    <service id="App\Infrastructure\File\Fetch\CurlRemoteXmlFetcher" class="App\Infrastructure\File\Fetch\CurlRemoteXmlFetcher" autowire="true" autoconfigure="true">
-      <argument type="service" id="App\Infrastructure\Config\ExternalFeedSourceYamlConfig"/>
-    </service>
     <service id="App\Infrastructure\File\Fetch\LocalXmlFileFetcher" class="App\Infrastructure\File\Fetch\LocalXmlFileFetcher" autowire="true" autoconfigure="true"/>
-    <service id="App\Infrastructure\File\Repository\XMLFileTypeHandler" class="App\Infrastructure\File\Repository\XMLFileTypeHandler" autowire="true" autoconfigure="true">
-      <tag name="container.error" message="The autoloader expected class &quot;App\Infrastructure\File\Repository\XMLFileTypeHandler&quot; to be defined in file &quot;/var/www/vendor/composer/../../src/Infrastructure/File/Repository/XMLFileTypeHandler.php&quot;. The file was found but the class was not in it, the class name or namespace probably has a typo."/>
+    <service id="App\Infrastructure\File\Fetch\RemoteXmlFetcher" class="App\Infrastructure\File\Fetch\RemoteXmlFetcher" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Infrastructure\Config\ExternalFeedSourceYamlConfig"/>
+      <argument type="service" id="App\Infrastructure\HttpClient\CurlClient"/>
     </service>
     <service id="App\Infrastructure\File\Save\XmlFileSaver" class="App\Infrastructure\File\Save\XmlFileSaver" autowire="true" autoconfigure="true">
       <argument type="service" id="App\Infrastructure\Config\FileSourceEnvConfig"/>
@@ -185,44 +172,21 @@
       <argument type="service" id="App\Infrastructure\Cache\RedisCache"/>
       <argument type="service" id="App\Infrastructure\Config\GoogleSheetEnvConfig"/>
       <argument type="service" id="App\Infrastructure\Config\FileSourceEnvConfig"/>
+      <argument type="service" id="App\Infrastructure\GoogleDocument\Sheet\SheetWriter"/>
+      <argument type="service" id="App\Infrastructure\GoogleDocument\Sheet\SheetCreator"/>
     </service>
+    <service id="App\Infrastructure\GoogleDocument\Sheet\SheetCreator" class="App\Infrastructure\GoogleDocument\Sheet\SheetCreator" autowire="true" autoconfigure="true"/>
+    <service id="App\Infrastructure\GoogleDocument\Sheet\SheetWriter" class="App\Infrastructure\GoogleDocument\Sheet\SheetWriter" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Infrastructure\Config\GoogleSheetEnvConfig"/>
+    </service>
+    <service id="App\Infrastructure\HttpClient\CurlClient" class="App\Infrastructure\HttpClient\CurlClient" autowire="true" autoconfigure="true"/>
     <service id="App\Infrastructure\Logger\MonoLogger" class="App\Infrastructure\Logger\MonoLogger" autowire="true" autoconfigure="true">
       <argument type="service" id="monolog.logger"/>
     </service>
     <service id="App\Infrastructure\Parser\SimpleXmlParser" class="App\Infrastructure\Parser\SimpleXmlParser" autowire="true" autoconfigure="true"/>
     <service id="App\Shared\Util\DateHelper" class="App\Shared\Util\DateHelper" autowire="true" autoconfigure="true"/>
     <service id="App\Shared\Util\SheetNameHelper" class="App\Shared\Util\SheetNameHelper" autowire="true" autoconfigure="true"/>
-    <service id="controller_resolver" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver">
-      <tag name="monolog.logger" channel="request"/>
-      <argument type="service" id="service_container"/>
-      <argument type="service" id="monolog.logger.request" on-invalid="ignore"/>
-      <call method="allowControllers">
-        <argument type="collection">
-          <argument>Symfony\Bundle\FrameworkBundle\Controller\AbstractController</argument>
-          <argument>Symfony\Bundle\FrameworkBundle\Controller\TemplateController</argument>
-        </argument>
-      </call>
-      <call method="allowControllers">
-        <argument type="collection">
-          <argument>App\Kernel</argument>
-        </argument>
-      </call>
-    </service>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
-    <service id="argument_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver">
-      <argument type="service" id="argument_metadata_factory"/>
-      <argument type="iterator">
-        <argument type="service" id="argument_resolver.backed_enum_resolver"/>
-        <argument type="service" id="argument_resolver.datetime"/>
-        <argument type="service" id="argument_resolver.request_attribute"/>
-        <argument type="service" id="argument_resolver.request"/>
-        <argument type="service" id="argument_resolver.session"/>
-        <argument type="service" id="argument_resolver.service"/>
-        <argument type="service" id="argument_resolver.default"/>
-        <argument type="service" id="argument_resolver.variadic"/>
-      </argument>
-      <argument type="service" id=".service_locator._ex3m56"/>
-    </service>
     <service id="argument_resolver.backed_enum_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">
       <tag priority="100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">controller.argument_value_resolver</tag>
     </service>
@@ -304,211 +268,15 @@
     <service id="parameter_bag" class="Symfony\Component\DependencyInjection\ParameterBag\ContainerBag">
       <argument type="service" id="service_container"/>
     </service>
-    <service id="event_dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher" public="true">
-      <tag name="container.hot_path"/>
-      <tag name="event_dispatcher">event_dispatcher.dispatcher</tag>
-      <call method="addListener">
-        <argument>kernel.response</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="response_listener"/>
-          <argument>onKernelResponse</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="locale_listener"/>
-          <argument>setDefaultLocale</argument>
-        </argument>
-        <argument>100</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="locale_listener"/>
-          <argument>onKernelRequest</argument>
-        </argument>
-        <argument>16</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.finish_request</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="locale_listener"/>
-          <argument>onKernelFinishRequest</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="validate_request_listener"/>
-          <argument>onKernelRequest</argument>
-        </argument>
-        <argument>256</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.response</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="disallow_search_engine_index_response_listener"/>
-          <argument>onResponse</argument>
-        </argument>
-        <argument>-255</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.controller_arguments</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="exception_listener"/>
-          <argument>onControllerArguments</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.exception</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="exception_listener"/>
-          <argument>logKernelException</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.exception</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="exception_listener"/>
-          <argument>onKernelException</argument>
-        </argument>
-        <argument>-128</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.response</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="exception_listener"/>
-          <argument>removeCspHeader</argument>
-        </argument>
-        <argument>-128</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.controller_arguments</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="controller.cache_attribute_listener"/>
-          <argument>onKernelControllerArguments</argument>
-        </argument>
-        <argument>10</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.response</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="controller.cache_attribute_listener"/>
-          <argument>onKernelResponse</argument>
-        </argument>
-        <argument>-10</argument>
-      </call>
-      <call method="addListener">
-        <argument>console.error</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="console.error_listener"/>
-          <argument>onConsoleError</argument>
-        </argument>
-        <argument>-128</argument>
-      </call>
-      <call method="addListener">
-        <argument>console.terminate</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="console.error_listener"/>
-          <argument>onConsoleTerminate</argument>
-        </argument>
-        <argument>-128</argument>
-      </call>
-      <call method="addListener">
-        <argument>console.error</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="console.suggest_missing_package_subscriber"/>
-          <argument>onConsoleError</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="debug.debug_handlers_listener"/>
-          <argument>configure</argument>
-        </argument>
-        <argument>2048</argument>
-      </call>
-      <call method="addListener">
-        <argument>console.command</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="debug.debug_handlers_listener"/>
-          <argument>configure</argument>
-        </argument>
-        <argument>2048</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="router_listener"/>
-          <argument>onKernelRequest</argument>
-        </argument>
-        <argument>32</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.finish_request</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="router_listener"/>
-          <argument>onKernelFinishRequest</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.exception</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="router_listener"/>
-          <argument>onKernelException</argument>
-        </argument>
-        <argument>-64</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="session_listener"/>
-          <argument>onKernelRequest</argument>
-        </argument>
-        <argument>128</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.response</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="session_listener"/>
-          <argument>onKernelResponse</argument>
-        </argument>
-        <argument>-1000</argument>
-      </call>
-      <call method="addListener">
-        <argument>console.command</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="monolog.handler.console"/>
-          <argument>onCommand</argument>
-        </argument>
-        <argument>255</argument>
-      </call>
-      <call method="addListener">
-        <argument>console.terminate</argument>
-        <argument type="collection">
-          <argument type="service_closure" id="monolog.handler.console"/>
-          <argument>onTerminate</argument>
-        </argument>
-        <argument>-255</argument>
-      </call>
-    </service>
     <service id="http_kernel" class="Symfony\Component\HttpKernel\HttpKernel" public="true">
       <tag name="container.hot_path"/>
       <tag name="container.preload" class="Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner"/>
       <tag name="container.preload" class="Symfony\Component\Runtime\Runner\Symfony\ResponseRunner"/>
       <tag name="container.preload" class="Symfony\Component\Runtime\SymfonyRuntime"/>
-      <argument type="service" id="event_dispatcher"/>
-      <argument type="service" id="controller_resolver"/>
+      <argument type="service" id="debug.event_dispatcher"/>
+      <argument type="service" id="debug.controller_resolver"/>
       <argument type="service" id="request_stack"/>
-      <argument type="service" id="argument_resolver"/>
+      <argument type="service" id="debug.argument_resolver"/>
       <argument>true</argument>
     </service>
     <service id="request_stack" class="Symfony\Component\HttpFoundation\RequestStack" public="true">
@@ -565,6 +333,8 @@
         <argument key="cache.validator" type="service" id="cache.validator" on-invalid="ignore_uninitialized"/>
         <argument key="cache.serializer" type="service" id="cache.serializer" on-invalid="ignore_uninitialized"/>
         <argument key="cache.property_info" type="service" id="cache.property_info" on-invalid="ignore_uninitialized"/>
+        <argument key="debug.stopwatch" type="service" id="debug.stopwatch" on-invalid="ignore_uninitialized"/>
+        <argument key="debug.event_dispatcher" type="service" id="debug.event_dispatcher" on-invalid="ignore_uninitialized"/>
         <argument key="debug.log_processor" type="service" id="debug.log_processor" on-invalid="ignore_uninitialized"/>
         <argument key="session_listener" type="service" id="session_listener" on-invalid="ignore_uninitialized"/>
         <argument key="monolog.handler.main" type="service" id="monolog.handler.main" on-invalid="ignore_uninitialized"/>
@@ -590,6 +360,12 @@
           <argument>reset</argument>
         </argument>
         <argument key="cache.property_info" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="debug.stopwatch" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="debug.event_dispatcher" type="collection">
           <argument>reset</argument>
         </argument>
         <argument key="debug.log_processor" type="collection">
@@ -668,7 +444,7 @@
     <service id="fragment.renderer.inline" class="Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer">
       <tag name="kernel.fragment_renderer" alias="inline"/>
       <argument type="service" id="http_kernel"/>
-      <argument type="service" id="event_dispatcher"/>
+      <argument type="service" id="debug.event_dispatcher"/>
       <call method="setFragmentPath">
         <argument>/_fragment</argument>
       </call>
@@ -691,6 +467,9 @@
         </service>
       </argument>
       <argument type="service" id="monolog.logger" on-invalid="null"/>
+    </service>
+    <service id="process.messenger.process_message_handler" class="Symfony\Component\Process\Messenger\RunProcessMessageHandler">
+      <tag name="messenger.message_handler"/>
     </service>
     <service id="console.error_listener" class="Symfony\Component\Console\EventListener\ErrorListener">
       <tag name="kernel.event_subscriber"/>
@@ -1229,6 +1008,228 @@
     <service id="debug.file_link_formatter" class="Symfony\Component\ErrorHandler\ErrorRenderer\FileLinkFormatter">
       <argument>%env(default::SYMFONY_IDE)%</argument>
     </service>
+    <service id="debug.stopwatch" class="Symfony\Component\Stopwatch\Stopwatch" public="true">
+      <tag name="kernel.reset" method="reset"/>
+      <argument>true</argument>
+    </service>
+    <service id="debug.event_dispatcher" class="Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher">
+      <tag name="container.hot_path"/>
+      <tag name="event_dispatcher">event_dispatcher.dispatcher</tag>
+      <tag name="monolog.logger" channel="event"/>
+      <tag name="kernel.reset" method="reset"/>
+      <tag name="container.decorator" id="event_dispatcher" inner="debug.event_dispatcher.inner"/>
+      <argument type="service" id="debug.event_dispatcher.inner"/>
+      <argument type="service" id="debug.stopwatch"/>
+      <argument type="service" id="monolog.logger.event" on-invalid="null"/>
+      <argument type="service" id="request_stack" on-invalid="null"/>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="response_listener"/>
+          <argument>onKernelResponse</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="locale_listener"/>
+          <argument>setDefaultLocale</argument>
+        </argument>
+        <argument>100</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="locale_listener"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>16</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.finish_request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="locale_listener"/>
+          <argument>onKernelFinishRequest</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="validate_request_listener"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>256</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="disallow_search_engine_index_response_listener"/>
+          <argument>onResponse</argument>
+        </argument>
+        <argument>-255</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.controller_arguments</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="exception_listener"/>
+          <argument>onControllerArguments</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.exception</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="exception_listener"/>
+          <argument>logKernelException</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.exception</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="exception_listener"/>
+          <argument>onKernelException</argument>
+        </argument>
+        <argument>-128</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="exception_listener"/>
+          <argument>removeCspHeader</argument>
+        </argument>
+        <argument>-128</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.controller_arguments</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="controller.cache_attribute_listener"/>
+          <argument>onKernelControllerArguments</argument>
+        </argument>
+        <argument>10</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="controller.cache_attribute_listener"/>
+          <argument>onKernelResponse</argument>
+        </argument>
+        <argument>-10</argument>
+      </call>
+      <call method="addListener">
+        <argument>console.error</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="console.error_listener"/>
+          <argument>onConsoleError</argument>
+        </argument>
+        <argument>-128</argument>
+      </call>
+      <call method="addListener">
+        <argument>console.terminate</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="console.error_listener"/>
+          <argument>onConsoleTerminate</argument>
+        </argument>
+        <argument>-128</argument>
+      </call>
+      <call method="addListener">
+        <argument>console.error</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="console.suggest_missing_package_subscriber"/>
+          <argument>onConsoleError</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="debug.debug_handlers_listener"/>
+          <argument>configure</argument>
+        </argument>
+        <argument>2048</argument>
+      </call>
+      <call method="addListener">
+        <argument>console.command</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="debug.debug_handlers_listener"/>
+          <argument>configure</argument>
+        </argument>
+        <argument>2048</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="router_listener"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>32</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.finish_request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="router_listener"/>
+          <argument>onKernelFinishRequest</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.exception</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="router_listener"/>
+          <argument>onKernelException</argument>
+        </argument>
+        <argument>-64</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="session_listener"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>128</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="session_listener"/>
+          <argument>onKernelResponse</argument>
+        </argument>
+        <argument>-1000</argument>
+      </call>
+      <call method="addListener">
+        <argument>console.command</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="monolog.handler.console"/>
+          <argument>onCommand</argument>
+        </argument>
+        <argument>255</argument>
+      </call>
+      <call method="addListener">
+        <argument>console.terminate</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="monolog.handler.console"/>
+          <argument>onTerminate</argument>
+        </argument>
+        <argument>-255</argument>
+      </call>
+    </service>
+    <service id="debug.controller_resolver" class="Symfony\Component\HttpKernel\Controller\TraceableControllerResolver">
+      <tag name="monolog.logger" channel="request"/>
+      <tag name="container.decorator" id="controller_resolver" inner="debug.controller_resolver.inner"/>
+      <argument type="service" id="debug.controller_resolver.inner"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id="debug.argument_resolver" class="Symfony\Component\HttpKernel\Controller\TraceableArgumentResolver">
+      <tag name="container.decorator" id="argument_resolver" inner="debug.argument_resolver.inner"/>
+      <argument type="service" id="debug.argument_resolver.inner"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
+      <tag name="controller.argument_value_resolver" priority="-200"/>
+      <argument type="service" id=".service_locator.F6vdjrP"/>
+    </service>
     <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
       <tag name="kernel.reset" method="reset"/>
       <argument type="service" id="request_stack"/>
@@ -1327,7 +1328,7 @@
     <service id="router.default" class="Symfony\Bundle\FrameworkBundle\Routing\Router">
       <tag name="monolog.logger" channel="router"/>
       <tag name="container.service_subscriber" id="routing.loader"/>
-      <argument type="service" id=".service_locator.MtzchpA.router.default"/>
+      <argument type="service" id=".service_locator.D_IQquD.router.default"/>
       <argument>kernel::loadRoutes</argument>
       <argument type="collection">
         <argument key="cache_dir">/var/www/var/cache/local</argument>
@@ -1541,8 +1542,6 @@
     </service>
     <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Adapters\Console\ProcessXmlToSheetsCommand" class="App\Adapters\Console\ProcessXmlToSheetsCommand" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Adapters\Console\ProcessXmlToSheetsCommand" class="App\Adapters\Console\ProcessXmlToSheetsCommand" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Infrastructure\Console\Command\SpreadsheetCommand" class="App\Infrastructure\Console\Command\SpreadsheetCommand" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Infrastructure\Console\Command\SpreadsheetCommand" class="App\Infrastructure\Console\Command\SpreadsheetCommand" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.pRu6x_4" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -1604,6 +1603,50 @@
         <argument key="inline" type="service_closure" id="fragment.renderer.inline"/>
       </argument>
     </service>
+    <service id=".debug.value_resolver.argument_resolver.backed_enum_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.backed_enum_resolver"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id=".debug.value_resolver.argument_resolver.datetime" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.datetime"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id=".debug.value_resolver.argument_resolver.request_attribute" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.request_attribute"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id=".debug.value_resolver.argument_resolver.request" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.request"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id=".debug.value_resolver.argument_resolver.session" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.session"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id=".debug.value_resolver.argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.service"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id=".debug.value_resolver.argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.default"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id=".debug.value_resolver.argument_resolver.variadic" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.variadic"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id=".debug.value_resolver.argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.not_tagged_controller"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id=".debug.value_resolver.argument_resolver.request_payload" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.request_payload"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
+    <service id=".debug.value_resolver.argument_resolver.query_parameter_value_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver">
+      <argument type="service" id="argument_resolver.query_parameter_value_resolver"/>
+      <argument type="service" id="debug.stopwatch"/>
+    </service>
     <service id="monolog.logger.request" class="Monolog\Logger">
       <argument>request</argument>
       <call method="pushHandler">
@@ -1637,6 +1680,12 @@
         <argument type="service" id="monolog.handler.main"/>
       </call>
     </service>
+    <service id="monolog.logger.event" class="Monolog\Logger">
+      <argument>event</argument>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.null_internal"/>
+      </call>
+    </service>
     <service id="monolog.logger.router" class="Monolog\Logger">
       <argument>router</argument>
       <call method="pushHandler">
@@ -1647,17 +1696,17 @@
       </call>
     </service>
     <service id="monolog.handler.null_internal" class="Monolog\Handler\NullHandler"/>
-    <service id=".service_locator.MtzchpA" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.D_IQquD" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="routing.loader" type="service_closure" id="routing.loader"/>
       </argument>
     </service>
-    <service id=".service_locator.MtzchpA.router.default" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.D_IQquD.router.default" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="router.default"/>
       <argument>router.default</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.MtzchpA" method="withContext"/>
+      <factory service=".service_locator.D_IQquD" method="withContext"/>
     </service>
     <service id=".service_locator.qXR9Hv0" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -1671,19 +1720,20 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.qXR9Hv0" method="withContext"/>
     </service>
-    <service id=".service_locator._ex3m56" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.EQoaKwO" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestPayloadValueResolver" type="service_closure" id="argument_resolver.request_payload"/>
-        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\QueryParameterValueResolver" type="service_closure" id="argument_resolver.query_parameter_value_resolver"/>
-        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver" type="service_closure" id="argument_resolver.backed_enum_resolver"/>
-        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DateTimeValueResolver" type="service_closure" id="argument_resolver.datetime"/>
-        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver" type="service_closure" id="argument_resolver.request_attribute"/>
-        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver" type="service_closure" id="argument_resolver.request"/>
-        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver" type="service_closure" id="argument_resolver.session"/>
-        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" type="service_closure" id="argument_resolver.service"/>
-        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" type="service_closure" id="argument_resolver.default"/>
-        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" type="service_closure" id="argument_resolver.variadic"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestPayloadValueResolver" type="service_closure" id=".debug.value_resolver.argument_resolver.request_payload"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\QueryParameterValueResolver" type="service_closure" id=".debug.value_resolver.argument_resolver.query_parameter_value_resolver"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver" type="service_closure" id=".debug.value_resolver.argument_resolver.backed_enum_resolver"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DateTimeValueResolver" type="service_closure" id=".debug.value_resolver.argument_resolver.datetime"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver" type="service_closure" id=".debug.value_resolver.argument_resolver.request_attribute"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver" type="service_closure" id=".debug.value_resolver.argument_resolver.request"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver" type="service_closure" id=".debug.value_resolver.argument_resolver.session"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" type="service_closure" id=".debug.value_resolver.argument_resolver.service"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" type="service_closure" id=".debug.value_resolver.argument_resolver.default"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" type="service_closure" id=".debug.value_resolver.argument_resolver.variadic"/>
+        <argument key="argument_resolver.not_tagged_controller" type="service_closure" id=".debug.value_resolver.argument_resolver.not_tagged_controller"/>
       </argument>
     </service>
     <service id=".service_locator.NLcq8cs" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -1705,7 +1755,7 @@
     <service id=".service_locator.52i_fix" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="event_dispatcher" type="service_closure" id="event_dispatcher"/>
+        <argument key="event_dispatcher" type="service_closure" id="debug.event_dispatcher"/>
       </argument>
     </service>
     <service id=".service_locator.sRcdyDU" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -1721,6 +1771,37 @@
         <argument key="logger" type="service_closure" id="monolog.logger" on-invalid="ignore"/>
         <argument key="request_stack" type="service_closure" id="request_stack" on-invalid="ignore"/>
       </argument>
+    </service>
+    <service id="debug.event_dispatcher.inner" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
+    <service id="debug.controller_resolver.inner" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver">
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="monolog.logger.request" on-invalid="ignore"/>
+      <call method="allowControllers">
+        <argument type="collection">
+          <argument>Symfony\Bundle\FrameworkBundle\Controller\AbstractController</argument>
+          <argument>Symfony\Bundle\FrameworkBundle\Controller\TemplateController</argument>
+        </argument>
+      </call>
+      <call method="allowControllers">
+        <argument type="collection">
+          <argument>App\Kernel</argument>
+        </argument>
+      </call>
+    </service>
+    <service id="debug.argument_resolver.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver">
+      <argument type="service" id="argument_metadata_factory"/>
+      <argument type="iterator">
+        <argument type="service" id=".debug.value_resolver.argument_resolver.backed_enum_resolver"/>
+        <argument type="service" id=".debug.value_resolver.argument_resolver.datetime"/>
+        <argument type="service" id=".debug.value_resolver.argument_resolver.request_attribute"/>
+        <argument type="service" id=".debug.value_resolver.argument_resolver.request"/>
+        <argument type="service" id=".debug.value_resolver.argument_resolver.session"/>
+        <argument type="service" id=".debug.value_resolver.argument_resolver.service"/>
+        <argument type="service" id=".debug.value_resolver.argument_resolver.default"/>
+        <argument type="service" id=".debug.value_resolver.argument_resolver.variadic"/>
+        <argument type="service" id=".debug.value_resolver.argument_resolver.not_tagged_controller"/>
+      </argument>
+      <argument type="service" id=".service_locator.EQoaKwO"/>
     </service>
     <service id=".errored..service_locator.zHyJIs5.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.zHyJIs5&quot;: it needs an instance of &quot;Symfony\Component\Config\Loader\LoaderInterface&quot; but this type has been excluded from autowiring."/>
@@ -1916,10 +1997,9 @@
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
-      <argument type="service" id=".service_locator.kj1Ys_Z"/>
+      <argument type="service" id=".service_locator.gzfCNdo"/>
       <argument type="collection">
         <argument key="sync:xml-to-sheets">App\Adapters\Console\ProcessXmlToSheetsCommand</argument>
-        <argument key="app:user:greet">App\Infrastructure\Console\Command\SpreadsheetCommand</argument>
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
         <argument key="cache:clear">console.command.cache_clear</argument>
@@ -1948,11 +2028,10 @@
         <argument key="secrets:encrypt-from-local">console.command.secrets_encrypt_from_local</argument>
       </argument>
     </service>
-    <service id=".service_locator.kj1Ys_Z" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.gzfCNdo" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Adapters\Console\ProcessXmlToSheetsCommand" type="service_closure" id=".App\Adapters\Console\ProcessXmlToSheetsCommand.lazy"/>
-        <argument key="App\Infrastructure\Console\Command\SpreadsheetCommand" type="service_closure" id="App\Infrastructure\Console\Command\SpreadsheetCommand"/>
         <argument key="console.command.about" type="service_closure" id=".console.command.about.lazy"/>
         <argument key="console.command.assets_install" type="service_closure" id=".console.command.assets_install.lazy"/>
         <argument key="console.command.cache_clear" type="service_closure" id=".console.command.cache_clear.lazy"/>
@@ -1989,18 +2068,19 @@
     <service id="App\Application\File\Contract\LocalFileFetcherContract" alias="App\Infrastructure\File\Fetch\LocalXmlFileFetcher"/>
     <service id="App\Application\File\Contract\FileSaverContract" alias="App\Infrastructure\File\Save\XmlFileSaver"/>
     <service id="App\Application\GoogleDocument\Sheet\Contract\GoogleSpreadsheetContract" alias="App\Infrastructure\GoogleDocument\Sheet\GoogleSpreadSheet"/>
+    <service id="App\Application\GoogleDocument\Sheet\Contract\SheetCreatorContract" alias="App\Infrastructure\GoogleDocument\Sheet\SheetCreator"/>
+    <service id="App\Application\GoogleDocument\Sheet\Contract\SheetWriterContract" alias="App\Infrastructure\GoogleDocument\Sheet\SheetWriter"/>
+    <service id="App\Application\Http\Contract\HttpClientContract" alias="App\Infrastructure\HttpClient\CurlClient"/>
     <service id="App\Application\Logger\Contract\LoggerContract" alias="App\Infrastructure\Logger\MonoLogger"/>
-    <service id="XmlParserContract" alias="App\Infrastructure\Parser\SimpleXmlParser"/>
+    <service id="App\Application\Parser\Contract\XmlParserContract" alias="App\Infrastructure\Parser\SimpleXmlParser"/>
     <service id="App\Application\Config\Contract\GoogleSheetConfigContract" alias="App\Infrastructure\Config\GoogleSheetEnvConfig"/>
-    <service id="App\Application\GoogleDocument\contract\CreateContract" alias="App\Infrastructure\GoogleDocument\Sheet\GoogleSpreadSheet"/>
-    <service id="App\Application\GoogleDocument\contract\ProcessContract" alias="App\Infrastructure\GoogleDocument\Sheet\GoogleSpreadSheet"/>
-    <service id="App\Application\GoogleDocument\contract\WriteContract" alias="App\Infrastructure\GoogleDocument\Sheet\GoogleSpreadSheet"/>
+    <service id="App\Application\GoogleDocument\Sheet\Contract\SheetProcessContract" alias="App\Infrastructure\GoogleDocument\Sheet\GoogleSpreadSheet"/>
     <service id="App\Kernel" alias="kernel" public="true"/>
     <service id="Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface" alias="parameter_bag"/>
     <service id="Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface" alias="parameter_bag"/>
-    <service id="Symfony\Component\EventDispatcher\EventDispatcherInterface" alias="event_dispatcher"/>
-    <service id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface" alias="event_dispatcher"/>
-    <service id="Psr\EventDispatcher\EventDispatcherInterface" alias="event_dispatcher"/>
+    <service id="Symfony\Component\EventDispatcher\EventDispatcherInterface" alias="debug.event_dispatcher"/>
+    <service id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface" alias="debug.event_dispatcher"/>
+    <service id="Psr\EventDispatcher\EventDispatcherInterface" alias="debug.event_dispatcher"/>
     <service id="Symfony\Component\HttpKernel\HttpKernelInterface" alias="http_kernel"/>
     <service id="Symfony\Component\HttpFoundation\RequestStack" alias="request_stack"/>
     <service id="Symfony\Component\HttpKernel\HttpCache\StoreInterface" alias="http_cache.store"/>
@@ -2021,6 +2101,7 @@
     <service id="Symfony\Contracts\Cache\CacheInterface" alias="cache.app"/>
     <service id="Symfony\Contracts\Cache\TagAwareCacheInterface" alias="cache.app.taggable"/>
     <service id="Symfony\Component\ErrorHandler\ErrorRenderer\FileLinkFormatter" alias="debug.file_link_formatter"/>
+    <service id="Symfony\Component\Stopwatch\Stopwatch" alias="debug.stopwatch"/>
     <service id="router" alias="router.default" public="true"/>
     <service id="Symfony\Component\Routing\RouterInterface" alias="router.default"/>
     <service id="Symfony\Component\Routing\Generator\UrlGeneratorInterface" alias="router.default"/>
@@ -2041,7 +2122,11 @@
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>
     <service id="Psr\Log\LoggerInterface $cacheLogger" alias="monolog.logger.cache"/>
     <service id="Psr\Log\LoggerInterface $phpLogger" alias="monolog.logger.php"/>
+    <service id="Psr\Log\LoggerInterface $eventLogger" alias="monolog.logger.event"/>
     <service id="Psr\Log\LoggerInterface $routerLogger" alias="monolog.logger.router"/>
+    <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
+    <service id="controller_resolver" alias="debug.controller_resolver"/>
+    <service id="argument_resolver" alias="debug.argument_resolver"/>
     <service id=".service_locator.n_ENPtW" alias=".service_locator.zHyJIs5"/>
   </services>
 </container>

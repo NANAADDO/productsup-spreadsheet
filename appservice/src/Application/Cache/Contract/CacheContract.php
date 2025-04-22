@@ -15,5 +15,4 @@ interface CacheContract
 
     public function verifyCacheHasData(string $cacheName): bool;
 
-
 }

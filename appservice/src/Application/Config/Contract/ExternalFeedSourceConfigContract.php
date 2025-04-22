@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Application\Config\Contract;
+
 interface ExternalFeedSourceConfigContract
 {
     public function getHost(): string;

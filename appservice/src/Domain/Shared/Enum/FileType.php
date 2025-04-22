@@ -4,6 +4,6 @@ namespace App\Domain\Shared\Enum;
 
 enum FileType: string
 {
-    case XML = "xml";
-    case CSV = "csv";
+    case XML = 'xml';
+    case CSV = 'csv';
 }

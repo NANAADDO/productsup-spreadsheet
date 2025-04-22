@@ -13,9 +13,6 @@ use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 #[AsAlias(LocalFileFetcherContract::class)]
 class LocalXmlFileFetcher implements LocalFileFetcherContract
 {
-
-
-
     public function fetch(FileSourceConfigContract $fileSourceEnvConfig): string
     {
         $fileInfo = new \SplFileInfo($fileSourceEnvConfig->getFilePath());
@@ -34,6 +31,5 @@ class LocalXmlFileFetcher implements LocalFileFetcherContract
 
         return file_get_contents($fileInfo->getRealPath());
     }
-
 
 }

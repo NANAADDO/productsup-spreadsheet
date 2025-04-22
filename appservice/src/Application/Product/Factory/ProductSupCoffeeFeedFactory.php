@@ -4,7 +4,6 @@ namespace App\Application\Product\Factory;
 
 use App\Application\Product\Contract\ProductFactoryContract;
 use App\Domain\Entities\Product\Productsup\CoffeeFeed;
-
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
 /**
@@ -13,6 +12,9 @@ use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 #[AsAlias(ProductFactoryContract::class)]
 class ProductSupCoffeeFeedFactory implements ProductFactoryContract
 {
+    /**
+     * @param array<string, mixed> $rawData
+     */
     public function createFromArray(array $rawData): array
     {
         $products = [];
@@ -45,6 +47,10 @@ class ProductSupCoffeeFeedFactory implements ProductFactoryContract
         return $products;
     }
 
+    /**
+     * @param array<string, mixed> $item
+     * @return array<string, mixed>
+     */
     public function normalizeXml(array $item): array
     {
         foreach ($item as $key => $value) {

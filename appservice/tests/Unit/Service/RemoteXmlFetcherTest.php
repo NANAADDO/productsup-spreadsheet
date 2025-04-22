@@ -1,11 +1,11 @@
 <?php
+
 namespace App\Tests\Unit\Service;
 
 use App\Application\Config\Contract\ExternalFeedSourceConfigContract;
 use App\Application\Config\Contract\FileSourceConfigContract;
 use App\Application\Http\Contract\HttpClientContract;
 use App\Domain\Exceptions\NotFoundException;
-use App\Domain\Exceptions\ServiceUnavailableException;
 use App\Domain\Exceptions\UnauthorizedException;
 use App\Infrastructure\File\Fetch\RemoteXmlFetcher;
 use PHPUnit\Framework\MockObject\MockObject;

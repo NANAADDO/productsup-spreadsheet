@@ -2,7 +2,6 @@
 
 namespace App\Domain\Exceptions;
 
-
 use DomainException;
 
 class FileTooLargeException extends DomainException

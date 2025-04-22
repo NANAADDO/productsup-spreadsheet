@@ -42,13 +42,10 @@ class RedisCache implements CacheContract
     {
         if ($this->verifyCacheHasData($cacheKey)) {
             return  ['hasKey' => true, $this->getCacheData($cacheKey)];
-            }
+        }
 
         return ['hasKey' => false];
 
-
     }
-
-
 
 }
