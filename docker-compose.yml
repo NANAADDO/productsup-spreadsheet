@@ -1,0 +1,60 @@
+services:
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      #- db
+      - redis
+    container_name: appservice
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_ENV: local
+      CONTAINER_ROLE: app
+      CACHE_DRIVER: redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    working_dir: /var/www
+    volumes:
+      - ./php/local.ini:/usr/local/etc/conf.d/local.ini
+      - ./appservice:/var/www
+    networks:
+      - app-network
+
+  webserver:
+    image: nginx:alpine
+    container_name: appserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - ./appservice:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+    networks:
+      - app-network
+
+  redis:
+    image: redis:alpine
+    container_name: app-redis-clean
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+# Docker Networks
+networks:
+  app-network:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local
+  redis:
+    driver: local
+  es_data:
+    driver: local

@@ -1,0 +1,5 @@
+[2025-04-21T18:54:23.023054+00:00] app.ERROR: {   "error": {     "code": 404,     "message": "Requested entity was not found.",     "errors": [       {         "message": "Requested entity was not found.",         "domain": "global",         "reason": "notFound"       }     ],     "status": "NOT_FOUND"   } }  [] []
+[2025-04-21T18:55:50.319891+00:00] app.ERROR: {   "error": {     "code": 404,     "message": "Requested entity was not found.",     "errors": [       {         "message": "Requested entity was not found.",         "domain": "global",         "reason": "notFound"       }     ],     "status": "NOT_FOUND"   } }  [] []
+[2025-04-21T22:57:59.154648+00:00] app.ERROR: Interface "App\Application\FileType\Contract\RemoteFileFetcherContract" not found [] []
+[2025-04-21T22:59:14.258172+00:00] app.ERROR: Interface "App\Application\FileType\Contract\RemoteFileFetcherContract" not found [] []
+[2025-04-21T23:00:07.426279+00:00] app.ERROR: Interface "App\Application\FileType\Contract\RemoteFileFetcherContract" not found [] []

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+    <item>
+    <entity_id>1</entity_id>
+    <CategoryName><![CDATA[Coffee]]></CategoryName>
+    <sku>12345</sku>
+    <name><![CDATA[Classic Roast]]></name>
+</catalog>
