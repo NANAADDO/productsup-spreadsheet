@@ -12,16 +12,18 @@ use App\Application\Product\Contract\ProductFactoryContract;
 use App\Domain\Entities\Product\Productsup\CoffeeFeed;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'sync:xml-to-sheets',
-    description: 'Processes a local or remote XML file and syncs its data to a Google Sheet.'
+    description: 'Processes a local or remote XML file and syncs its data to a Google Sheet'
 )]
 class ProcessXmlToSheetsCommand extends Command
 {
+    protected static $defaultName = 'sync:xml-to-sheets';
     public function __construct(
         private readonly FileFetcherFactory $fileFetcherFactory,
         private readonly  FileSourceConfigContract                       $fileSourceConfig,
@@ -35,16 +37,24 @@ class ProcessXmlToSheetsCommand extends Command
 
     }
 
+    protected function configure(): void
+    {
+        $this
+            ->addArgument('fileSource', InputArgument::OPTIONAL, 'The username');
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
+        $fileSource = $input->getArgument('fileSource') ?? $this->fileSourceConfig->getFileSource();
+
         try {
-            $io->info("Starting file fetch from source: {$this->fileSourceConfig->getFileSource()}");
-            $fetcher = $this->fileFetcherFactory->create($this->fileSourceConfig->getFileSource());
+            $io->info("Starting file fetch from source: {$fileSource}");
+            $fetcher = $this->fileFetcherFactory->create($fileSource);
             $xmlContent = $fetcher->fetch($this->fileSourceConfig);
             if ($this->fileSourceConfig->getFileSource() == 'remote') {
-                $io->success('Saving XML content into local storage..');
+                $io->info('Saving XML content into local storage..');
                 $this->fileSaver->save($xmlContent);
             }
 

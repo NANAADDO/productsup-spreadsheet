@@ -118,7 +118,7 @@
         <argument>sync:xml-to-sheets</argument>
       </call>
       <call method="setDescription">
-        <argument>Processes a local or remote XML file and syncs its data to a Google Sheet.</argument>
+        <argument>Processes a local or remote XML file and syncs its data to a Google Sheet</argument>
       </call>
     </service>
     <service id="App\Application\File\Factory\FileFetcherFactory" class="App\Application\File\Factory\FileFetcherFactory" autowire="true" autoconfigure="true">
@@ -1809,7 +1809,7 @@
     <service id=".App\Adapters\Console\ProcessXmlToSheetsCommand.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>sync:xml-to-sheets</argument>
       <argument type="collection"/>
-      <argument>Processes a local or remote XML file and syncs its data to a Google Sheet.</argument>
+      <argument>Processes a local or remote XML file and syncs its data to a Google Sheet</argument>
       <argument>false</argument>
       <argument type="service_closure" id="App\Adapters\Console\ProcessXmlToSheetsCommand"/>
     </service>

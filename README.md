@@ -8,7 +8,11 @@ Contents
 * [Running the Application & Configuration Guide](#installation)
 * [Testing Strategy & Coverage](#coding-task-details)
 
-
+### NB
+The Secret folder will be shared via email for security purposes and should be placed in the 
+appropriate config directory. This folder contains two key files: secret.yaml, 
+which stores each client remote  connection credentials, and a second file containing the 
+Google authentication JSON used for API access
 
 ## Design Depth
 
