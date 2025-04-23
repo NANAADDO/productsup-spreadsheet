@@ -14,8 +14,8 @@ Contents
 
 ##### Stack
 * Language:Php:8+
-* framework:Symfony:10
-* Cache:Redis
+* framework:Symfony:7.2.5
+* Cache:Redis:
 
 #### Code Quality
 * PhpStan
@@ -55,7 +55,19 @@ task or concern, which not only improves maintainability but also makes it strai
 By isolating responsibilities, we ensure clear boundaries between components, enabling modular development and easier debugging
 
 
-<img src="https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/service-process-flow.png" alt="Description" style="align-content: center;"  height="450"/>
+<img src="https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/service-process-flow.png" alt="Description" style="align-content: center;" width="1000" height="450"/>
+
+## Interface Segregation & Dependency Injection
+This diagram illustrates the principle of Interface Segregation, where each service implements only the methods 
+it requires. By using dependency injection, services remain loosely coupled, making the system more scalable, maintainable, and easier to extend.
+
+[View Diagram Here]( https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/interfaace%20-segration-dependency-inversion.png)
+
+
+## Liskov Substitution Principle
+This diagram illustrates the implementation of the Liskov Substitution Principle, ensuring polymorphism 
+by allowing derived classes to be used interchangeably with their base classes without affecting functionality.
+[View Diagram Here](https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/Liskov%20Substitution.png)
 
 ## Application Setup
 
