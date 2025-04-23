@@ -3,7 +3,6 @@
 namespace App\Tests\Unit\Service;
 
 use App\Application\Config\Contract\FileSourceConfigContract;
-use App\Domain\Exceptions\FileNotAccessibleException;
 use App\Domain\Exceptions\InvalidFileTypeException;
 use App\Domain\Exceptions\NotFoundException;
 use App\Infrastructure\File\Fetch\LocalXmlFileFetcher;
@@ -34,8 +33,6 @@ class LocalXmlFileFetcherTest extends TestCase
         $this->expectException(NotFoundException::class);
         $this->fetcher->fetch($this->fileSourceConfigMock);
     }
-
-
 
     public function testFetchThrowsInvalidFileTypeExceptionIfFileTypeIsNotXML(): void
     {

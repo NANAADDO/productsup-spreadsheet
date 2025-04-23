@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\GoogleDocument\Sheet;
 
+use App\Application\GoogleDocument\Sheet\Contract\GooglesheetAuthenticateContract;
 use App\Application\GoogleDocument\Sheet\Contract\SheetCreatorContract;
-use Google_Service_Sheets;
 use Google_Service_Sheets_Spreadsheet;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
@@ -11,10 +11,9 @@ use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 class SheetCreator implements SheetCreatorContract
 {
     private $sheetsService;
-    public function __construct()
+    public function __construct(private GooglesheetAuthenticateContract $googlesheetAuthenticate)
     {
-
-        $this->sheetsService = new Google_Service_Sheets();
+        $this->sheetsService = $this->googlesheetAuthenticate->authenticate('Create Sheet');
     }
 
     public function create(string $title): string
