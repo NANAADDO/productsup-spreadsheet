@@ -151,7 +151,7 @@ a predefined default path for authentication and sheet writing.
 
 #### STEP 1 
 Open a new Google Spreadsheet in your browser and grant
-[productsup-feed@serene-utility-457421-e5.iam.gserviceaccount.com](#) write access by adding it as an editor.
+[productsup-data-products@serene-utility-457421-e5.iam.gserviceaccount.com](#) write access by adding it as an editor.
 
 #### STEP 2
 Copy the Sheet ID from the red highlighted portion of the URL below:
