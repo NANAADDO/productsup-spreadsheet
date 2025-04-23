@@ -168,7 +168,7 @@ GOOGLE_SHEETS_ID=1CAav5TIRu9oH9vVNxZPkFYiLO81FAVbwAeQW4VMeg2M
 #### STEP 4 
 This configuration in the table below can be changed or left as default  
 ###### NB
-The FILE_SOURCE cam be passed also as an  argument in the console which overwrite the env variable 
+The FILE_SOURCE cam be passed also as an argument in the console which overwrite the env variable 
 
 | NAME                               | PURPOSE                                                | VALUE                                 |
 |------------------------------------|--------------------------------------------------------|---------------------------------------|
@@ -184,7 +184,7 @@ The FILE_SOURCE cam be passed also as an  argument in the console which overwrit
 | GOOGLE_SHEETS_TITLE                | Optional: Title for the Google Sheet                   |                                       |
 
 
-## Run the shell script to Execute the Console CLI
+## Run the docker command to Execute the Console CLI
 
 ```shell
  docker exec -it appservice php bin/console sync:xml-to-sheets
@@ -215,7 +215,7 @@ Alternatively, you can leave the variable blank to automatically generate a new 
 * Newly generated Sheet IDs are temporarily cached to improve performance.
 * Remote files are downloaded and stored locally to enable faster and repeated access
 
-### Run the shell script to Execute the Console CLI
+### Run the docker command to Execute the Console CLI
 ```shell
  docker exec -it appservice php bin/phpunit
 

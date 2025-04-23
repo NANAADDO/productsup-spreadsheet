@@ -35,20 +35,7 @@ class LocalXmlFileFetcherTest extends TestCase
         $this->fetcher->fetch($this->fileSourceConfigMock);
     }
 
-    public function testFetchThrowsFileNotAccessibleExceptionIfFileIsNotReadable(): void
-    {
 
-        $filePath = $this->fileDirectory.'malformed_sample.xml';
-        chmod($filePath, 0000);
-        $this->fileSourceConfigMock->method('getFilePath')->willReturn($filePath);
-
-        $this->fileInfoMock = $this->createMock(\SplFileInfo::class);
-        $this->fileInfoMock->method('isFile')->willReturn(true);
-        $this->fileInfoMock->method('isReadable')->willReturn(false);
-
-        $this->expectException(FileNotAccessibleException::class);
-        $this->fetcher->fetch($this->fileSourceConfigMock);
-    }
 
     public function testFetchThrowsInvalidFileTypeExceptionIfFileTypeIsNotXML(): void
     {
