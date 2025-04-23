@@ -1,6 +1,7 @@
 # Symfony / PHP / Composer
 appservice/vendor/
 appservice/.env
+appservice/config/secret/
 .env.local
 .env.*.local
 appservice/.phpunit.result.cache

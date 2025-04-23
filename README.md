@@ -139,12 +139,12 @@ a predefined default path for authentication and sheet writing.
 
 #### STEP 1 
 Open a new Google Spreadsheet in your browser and grant
-[product-sup@serene-utility-457421-e5.iam.gserviceaccount.com](#) write access by adding it as an editor.
+[productsup-feed@serene-utility-457421-e5.iam.gserviceaccount.com](#) write access by adding it as an editor.
 
 #### STEP 2
 Copy the Sheet ID from the red highlighted portion of the URL below:
 
-https://docs.google.com/spreadsheets/d/<span <span style="background-color: red; color:red;">Copy Sheet ID</span>/edit?gid=0#gid=0
+https://docs.google.com/spreadsheets/d/ <span style="background-color: red; color:red;">Copy SheetID</span>/edit?gid=0#gid=0
 
 #### STEP 3
 Paste the copied Sheet ID into your .env file using the variable name GOOGLE_SHEETS_ID.
