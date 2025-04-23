@@ -48,6 +48,14 @@ Contents
 
 * Leverage Service Resolvers (e.g., tagged service locators or Symfony’s ServiceSubscriberInterface) to dynamically resolve service implementations when multiple services share the same interface.
 
+* Ensure Code Passes PHPStan Checks.
+
+## Hexagonal Architecture
+This diagram illustrates how the layers in the application interact with each other, 
+following the principles of Hexagonal Architecture to ensure separation of concerns and flexibility in adapting to different interfaces.
+
+[View Diagram Here](https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/clean%20-code-Architecture.png)
+
 
 ## Service Process Flow
 Each service in the architecture is designed following the <b>Single Responsibility Principle</b>. This means every service focuses on a specific
