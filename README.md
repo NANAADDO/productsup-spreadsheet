@@ -55,7 +55,7 @@ task or concern, which not only improves maintainability but also makes it strai
 By isolating responsibilities, we ensure clear boundaries between components, enabling modular development and easier debugging
 
 
-<img src="https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/service-process-flow.png" alt="Description" style="align-content: center;" width="1000" height="450"/>
+<img src="https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/service-process-flow.png" alt="Description" style="align-content: center;"  height="500"/>
 
 ## Interface Segregation & Dependency Injection
 This diagram illustrates the principle of Interface Segregation, where each service implements only the methods 
@@ -67,6 +67,7 @@ it requires. By using dependency injection, services remain loosely coupled, mak
 ## Liskov Substitution Principle
 This diagram illustrates the implementation of the Liskov Substitution Principle, ensuring polymorphism 
 by allowing derived classes to be used interchangeably with their base classes without affecting functionality.
+
 [View Diagram Here](https://github.com/NANAADDO/productsup-spreadsheet/blob/master/appservice/storage/designs/Liskov%20Substitution.png)
 
 ## Application Setup
@@ -143,7 +144,7 @@ Open a new Google Spreadsheet in your browser and grant
 #### STEP 2
 Copy the Sheet ID from the red highlighted portion of the URL below:
 
-https://docs.google.com/spreadsheets/d/<span <span style="background-color: red">Copy Sheet ID</span>/edit?gid=0#gid=0
+https://docs.google.com/spreadsheets/d/<span <span style="background-color: red; color:red;">Copy Sheet ID</span>/edit?gid=0#gid=0
 
 #### STEP 3
 Paste the copied Sheet ID into your .env file using the variable name GOOGLE_SHEETS_ID.
